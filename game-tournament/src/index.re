@@ -39,13 +39,29 @@ let shuffle = d => {
 	List.map(snd, sond);
 };
 
-let playTournament = (players) => {
+let playGame = (p1, p2) => { if (p1 > p2) {p1} else {p2} }
+
+let rec playRound = (players) => switch(players) {
+	| [] => players
+	| [p] => players 
+	| [p1, p2, ...tl] => {
+		if (playGame(p1, p2) == playGame(p2, p1)) {
+			print_endline(playGame(p1, p2) ++ " won when " ++ p1 ++ " played " ++ p2);
+			[playGame(p1, p2), ...playRound(tl)]
+		} else {
+			print_endline("p1 and p2 both won when " ++ p1 ++ " played " ++ p2);
+			[playGame(p1, p2), playGame(p2, p1), ...playRound(tl)]
+		}
+	}
+}
+
+let rec playTournament = (players) => {
 	let newplayers = shuffle(players);
 	switch (newplayers) {
 	| [] => print_endline("wait what...")
 	| [p] => print_endline(p ++ " is the winner!")
 	| [p1, p2] => print_endline(p1 ++ " and " ++ p2 ++ " are both winners!")
-	| alop => print_endline("playing a round")
+	| alop => print_endline("playing tournament!"); playTournament(playRound(alop))
 	}
 }
 
@@ -58,7 +74,7 @@ let setup = (env) => {
 	Draw.fill(Utils.color(~r=255, ~g=255, ~b=255, ~a=255), env);
 	drawBoard(board, 310, env);
 
-
+	playTournament(allPlayers);
 }
 
 let draw = (_state, env) => {
