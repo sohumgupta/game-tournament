@@ -41,31 +41,40 @@ let shuffle = d => {
 
 let playGame = (p1, p2) => { if (p1 > p2) {p1} else {p2} }
 
-let rec playRound = (players) => switch(players) {
+let rec playRound = (players, env) => switch(players) {
 	| [] => players
 	| [p] => players 
 	| [p1, p2, ...tl] => {
-		if (playGame(p1, p2) == playGame(p2, p1)) {
-			print_endline(playGame(p1, p2) ++ " won when " ++ p1 ++ " played " ++ p2);
-			[playGame(p1, p2), ...playRound(tl)]
+		let g1 = playGame(p1, p2);
+		let g2 = playGame(p2, p1);
+
+		if (g1 == g2) {
+			print_endline(g1 ++ " won when " ++ p1 ++ " played " ++ p2);
+			[g1, ...playRound(tl, env)]
 		} else {
 			print_endline("p1 and p2 both won when " ++ p1 ++ " played " ++ p2);
-			[playGame(p1, p2), playGame(p2, p1), ...playRound(tl)]
+			[g1, g2, ...playRound(tl, env)]
 		}
 	}
 }
 
-let rec playTournament = (players) => {
+let rec playTournament = (players, env) => {
 	let newplayers = shuffle(players);
 	switch (newplayers) {
-	| [] => print_endline("wait what...")
+	| [] => print_endline("wait what... nobody won!")
 	| [p] => print_endline(p ++ " is the winner!")
-	| [p1, p2] => print_endline(p1 ++ " and " ++ p2 ++ " are both winners!")
-	| alop => print_endline("playing tournament!"); playTournament(playRound(alop))
+	| [p1, p2] => {
+		let g1 = playGame(p1, p2);
+		let g2 = playGame(p2, p1);
+		if (g1 == g2) { print_endline(g1 ++ " is the winner!") } 
+		else { print_endline(g1 ++ " and " ++ g2 ++ " are both winners!") }
+	}
+	| alop => print_endline("playing tournament!"); playTournament(playRound(alop, env), env)
 	}
 }
 
 let setup = (env) => {
+
 	Env.size(~width=1400, ~height=1000, env);
 	Draw.background(Utils.color(~r=200, ~g=200, ~b=200, ~a=255), env);
 	
@@ -74,7 +83,7 @@ let setup = (env) => {
 	Draw.fill(Utils.color(~r=255, ~g=255, ~b=255, ~a=255), env);
 	drawBoard(board, 310, env);
 
-	playTournament(allPlayers);
+	playTournament(allPlayers, env);
 }
 
 let draw = (_state, env) => {
