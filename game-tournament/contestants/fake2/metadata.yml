@@ -1,0 +1,13 @@
+---
+:id: 25981830
+:submitters:
+- :name: B01608926
+  :email: william_b_chen@brown.edu
+- :name: B01545536
+  :email: josiah_lim@brown.edu
+:created_at: !ruby/object:ActiveSupport::TimeWithZone
+  utc: 2019-12-05 03:21:29.918529000 Z
+  zone: !ruby/object:ActiveSupport::TimeZone
+    name: America/Los_Angeles
+  time: 2019-12-04 19:21:29.918529000 Z
+:status: processed

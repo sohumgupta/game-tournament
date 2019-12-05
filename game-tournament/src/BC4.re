@@ -4,7 +4,7 @@ open SigGame;
 module Connect4 = {
 
     /* board dimensions */
-    let boardWidth: int = 8;
+    let boardWidth: int = 9;
     let boardHeight: int = 5;
 
     let names = "login1 login2";

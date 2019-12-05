@@ -15,6 +15,8 @@ module P2 = AIPlayer(G2);
 let numRows = 6;
 let numCols = 7;
 
+let timeout = 3.5;
+
 let p1Name = G1.names;
 let p2Name = G2.names;
 
@@ -50,6 +52,18 @@ let setup = (env) => {
 }
 
 let draw = (state, env) => {
+
+	if (Env.deltaTime(env) > 3.5 && winP.winP == "O") {
+		if (curStates.player == 1) {
+			winP.winP = "2W";
+			print_endline("Player 2 Wins!");
+			Display.drawScore("Player 2 Wins!", env);
+		} else {
+			winP.winP = "1W";
+			print_endline("Player 1 Wins!");
+			Display.drawScore("Player 1 Wins!", env);
+		}
+	}
 
 	if (winP.winP == "O") {
 		let state = curStates.master;
@@ -119,6 +133,18 @@ let draw = (state, env) => {
 			exit(0);
 		}
 	};
+
+	if (Env.deltaTime(env) > 3.5 && winP.winP == "O") {
+		if (curStates.player == 1) {
+			winP.winP = "2W";
+			print_endline("Player 2 Wins!");
+			Display.drawScore("Player 2 Wins!", env);
+		} else {
+			winP.winP = "1W";
+			print_endline("Player 1 Wins!");
+			Display.drawScore("Player 1 Wins!", env);
+		}
+	}
 };
 
 run(~setup, ~draw, ());
