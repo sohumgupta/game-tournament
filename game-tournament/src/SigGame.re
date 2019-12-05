@@ -3,6 +3,8 @@ module type Game = {
     /* specifies a player */
     type whichPlayer = P1 | P2;
 
+    let names : string;
+
     /* status of game: if it's over (and who won) or ongoing (and who's turn) */
     type status =
        | Win(whichPlayer)

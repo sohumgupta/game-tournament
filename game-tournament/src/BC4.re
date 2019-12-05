@@ -4,8 +4,10 @@ open SigGame;
 module Connect4 = {
 
     /* board dimensions */
-    let boardWidth: int = 7;
+    let boardWidth: int = 8;
     let boardHeight: int = 5;
+
+    let names = "login1 login2";
 
     /* player 1 is P1, player 2 is P2 */
     type whichPlayer =

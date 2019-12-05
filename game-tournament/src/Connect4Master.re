@@ -7,6 +7,8 @@ module Connect4 = {
     let boardWidth: int = 7;
     let boardHeight: int = 5;
 
+    let names = "master master";
+
     /* player 1 is P1, player 2 is P2 */
     type whichPlayer =
       | P1

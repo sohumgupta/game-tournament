@@ -17,7 +17,7 @@ let drawPiece = (player, x, y, env) => {
 }
 
 let drawScore = (s, env) => {
-    Draw.fill(Utils.color(~r=255, ~g=255, ~b=255, ~a=150), env); 
+    Draw.fill(Utils.color(~r=255, ~g=255, ~b=255, ~a=250), env); 
     Draw.rect(~pos=(450,500), ~width=500, ~height=200, env);
     Draw.fill(Utils.color(~r=0, ~g=0, ~b=0, ~a=255), env);
     Draw.text(~body=s, ~pos=(600, 590), env);
