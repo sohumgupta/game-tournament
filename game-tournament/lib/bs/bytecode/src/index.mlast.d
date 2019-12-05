@@ -1,1 +1,1 @@
-src/index.cmo :
+src/index.cmo : src/AC4.cmo src/APlayer.cmo src/BC4.cmo src/BPlayer.cmo src/Connect4Master.cmo src/Display.cmo

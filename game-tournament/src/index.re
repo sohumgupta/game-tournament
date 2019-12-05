@@ -1,93 +1,131 @@
 open Reprocessing;
+open Display;
+open Connect4Master;
+//open APlayer;
+open BPlayer;
+
+module Master = Connect4Master.Connect4;
+
+open AC4;
+open APlayer;
+module G1 = Connect4;
+module P1 = AIPlayer(G1);
+
+open BC4;
+open BPlayer;
+module G2 = Connect4;
+module P2 = AIPlayer(G2);
 
 let numRows = 6;
 let numCols = 7;
-let radiusX = 400/numCols;
-let radiusY = 400/numRows;
 
-let allPlayers = ["a", "b", "c", "d", "e", "f", "g", "h"];
+let p1Name = "sgupta45 sgupta46";
+let p2Name = "sgupta47 sgupta48";
 
-let rec initColumn = (rows) => switch (rows) {
-	| 0 => []
-	| r => ["empty", ...initColumn(r - 1)]
+type states = {
+	mutable master: Master.state,
+	mutable p1: G1.state,
+	mutable p2: G2.state,
+	mutable player: int
 }
 
-let rec initBoard = (cols) => switch (cols) {
-	| 0 => []
-	| c => [initColumn(numRows), ...initBoard(c - 1)]
-}
-
-let rec drawColumn = (column, startX, startY, env) => switch (column) {
-	| [] => Printf.printf("");
-	| [hd, ...tl] => {
-		Draw.ellipse(~center=(startX, startY + radiusX), ~radx=radiusX, ~rady=radiusY, env); 
-		drawColumn(tl, startX, startY + radiusY*2 + 20, env)
-	}
-}
-
-let rec drawBoard = (board, startX, env) => switch (board) {
-	| [] => Printf.printf("");
-	| [hd, ...tl] => {
-		drawColumn(hd, startX, radiusY/2 + 20, env);
-		drawBoard(tl, startX + radiusX * 2 + 20, env)
-	}
-}
-
-let shuffle = d => {
-	let nd = List.map(c => (Random.bits(), c), d);
-	let sond = List.sort(compare, nd);
-	List.map(snd, sond);
+let curStates = {
+	master: Master.initialState,
+	p1: G1.initialState,
+	p2: G2.initialState,
+	player: 1
 };
 
-let playGame = (p1, p2) => { if (p1 > p2) {p1} else {p2} }
-
-let rec playRound = (players, env) => switch(players) {
-	| [] => players
-	| [p] => players 
-	| [p1, p2, ...tl] => {
-		let g1 = playGame(p1, p2);
-		let g2 = playGame(p2, p1);
-
-		if (g1 == g2) {
-			print_endline(g1 ++ " won when " ++ p1 ++ " played " ++ p2);
-			[g1, ...playRound(tl, env)]
+let rec playGame = (state, p1s, p2s, player, env) => {
+	Display.drawBoard(numRows, numCols, Master.stringOfState(state), env);
+	let currentStatus = Master.gameStatus(state);
+	let winP = switch(currentStatus) {
+		| Win(P1) => "1W"
+        | Win(P2) => "2W"
+		| Draw => "D"
+        | _  => "O"
+	};
+	if (winP == "O") {
+		if (player == 1) {
+			let move = G1.stringOfMove(P1.nextMove(p1s));
+			print_endline("move: " ++ move);
+			let newstate = Master.nextState(state, Master.moveOfString(move));
+			let newp1s = G1.nextState(p1s, G1.moveOfString(move));
+			let newp2s = G2.nextState(p2s, G2.moveOfString(move));
+			playGame(newstate, p1s, p2s, 2, env);
 		} else {
-			print_endline("p1 and p2 both won when " ++ p1 ++ " played " ++ p2);
-			[g1, g2, ...playRound(tl, env)]
+			let move = G2.stringOfMove(P2.nextMove(p2s));
+			print_endline("move: " ++ move);
+			let newstate = Master.nextState(state, Master.moveOfString(move));
+			let newp1s = G1.nextState(p1s, G1.moveOfString(move));
+			let newp2s = G2.nextState(p2s, G2.moveOfString(move));
+			playGame(newstate, p1s, p2s, 1, env);
+		}
+	} else {
+		switch (winP) {
+			| "1W" => "Player 1 Wins!"
+			| "2W" => "Player 2 Wins!"
+			| "D" => "Draw!"
+			| _ => failwith("huh?")
 		}
 	}
 }
 
-let rec playTournament = (players, env) => {
-	let newplayers = shuffle(players);
-	switch (newplayers) {
-	| [] => print_endline("wait what... nobody won!")
-	| [p] => print_endline(p ++ " is the winner!")
-	| [p1, p2] => {
-		let g1 = playGame(p1, p2);
-		let g2 = playGame(p2, p1);
-		if (g1 == g2) { print_endline(g1 ++ " is the winner!") } 
-		else { print_endline(g1 ++ " and " ++ g2 ++ " are both winners!") }
-	}
-	| alop => print_endline("playing tournament!"); playTournament(playRound(alop, env), env)
-	}
-}
-
 let setup = (env) => {
-
-	Env.size(~width=1400, ~height=1000, env);
-	Draw.background(Utils.color(~r=200, ~g=200, ~b=200, ~a=255), env);
-	
-	let board = initBoard(numCols);
-	
-	Draw.fill(Utils.color(~r=255, ~g=255, ~b=255, ~a=255), env);
-	drawBoard(board, 310, env);
-
-	playTournament(allPlayers, env);
+	Display.drawBG(env);
+	Display.drawNames(p1Name, p2Name, env);
 }
 
 let draw = (_state, env) => {
-	Printf.printf("");
+	
+	let state = curStates.master;
+	let p1s = curStates.p1;
+	let p2s = curStates.p2;
+	let player = curStates.player;
+
+	Display.drawBoard(numRows, numCols, Master.stringOfState(state), env);
+	let currentStatus = Master.gameStatus(state);
+	let winP = switch(currentStatus) {
+		| Win(P1) => "1W"
+        | Win(P2) => "2W"
+		| Draw => "D"
+        | _  => "O"
+	};
+	let game1 = 
+	if (winP == "O") {
+		if (player == 1) {
+			let move = G1.stringOfMove(P1.nextMove(p1s));
+			print_endline("move: " ++ move);
+			let newstate = Master.nextState(state, Master.moveOfString(move));
+			let newp1s = G1.nextState(p1s, G1.moveOfString(move));
+			let newp2s = G2.nextState(p2s, G2.moveOfString(move));
+			curStates.player = 2;
+			curStates.master = newstate;
+			curStates.p1 = newp1s;
+			curStates.p2 = newp2s;
+		} else {
+			let move = G2.stringOfMove(P2.nextMove(p2s));
+			print_endline("move: " ++ move);
+			let newstate = Master.nextState(state, Master.moveOfString(move));
+			let newp1s = G1.nextState(p1s, G1.moveOfString(move));
+			let newp2s = G2.nextState(p2s, G2.moveOfString(move));
+			curStates.player = 1;
+			curStates.master = newstate;
+			curStates.p1 = newp1s;
+			curStates.p2 = newp2s;
+		}; 
+		"";
+	} else {
+		switch (winP) {
+			| "1W" => "Player 1 Wins!"
+			| "2W" => "Player 2 Wins!"
+			| "D" => "Draw!"
+			| _ => failwith("huh?")
+		}
+	};
+	if (game1 != "") {
+		Display.drawScore(game1, env);
+	}
 };
 
 run(~setup, ~draw, ());
