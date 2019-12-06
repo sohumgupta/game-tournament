@@ -1,0 +1,191 @@
+
+
+> reprocessing-example@ build:native /Users/jfh/Desktop/game-tournament/game-tournament
+> bsb -make-world -backend native
+
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+
+> reprocessing-example@ start /Users/jfh/Desktop/game-tournament/game-tournament
+> ./lib/bs/bytecode/indexhot.byte
+
+[1/6] [34mBuilding[39m [2msrc/BPlayer.cmo[22m
+
+  We've found a bug for you!
+  /Users/jfh/Desktop/game-tournament/game-tournament/src/BPlayer.re 1:7-19
+  
+  1 │ open CS17SetupGame;
+  2 │ open SigGame; 
+  3 │ open Connect4;
+  
+  The module or file CS17SetupGame can't be found.
+  - If it's a third-party dependency:
+    - Did you list it in bsconfig.json?
+    - Did you run `bsb` instead of `bsb -make-world`
+      (latter builds third-parties)?
+  - Did you include the file's directory in bsconfig.json?
+  
+[2/6] [34mBuilding[39m [2msrc/APlayer.cmo[22m
+
+  We've found a bug for you!
+  /Users/jfh/Desktop/game-tournament/game-tournament/src/APlayer.re 1:6-18
+  
+  1 │ open! CS17SetupGame;
+  2 │ open SigGame; 
+  3 │ open Connect4;
+  
+  The module or file CS17SetupGame can't be found.
+  - If it's a third-party dependency:
+    - Did you list it in bsconfig.json?
+    - Did you run `bsb` instead of `bsb -make-world`
+      (latter builds third-parties)?
+  - Did you include the file's directory in bsconfig.json?
+  
+[3/6] [34mBuilding[39m [2msrc/BC4.cmo[22m
+
+  We've found a bug for you!
+  /Users/jfh/Desktop/game-tournament/game-tournament/src/BC4.re 1:7-19
+  
+  1 │ open CS17SetupGame;   
+  2 │ open SigGame; 
+  3 │ 
+  
+  The module or file CS17SetupGame can't be found.
+  - If it's a third-party dependency:
+    - Did you list it in bsconfig.json?
+    - Did you run `bsb` instead of `bsb -make-world`
+      (latter builds third-parties)?
+  - Did you include the file's directory in bsconfig.json?
+  
+[4/6] [34mBuilding[39m [2msrc/AC4.cmo[22m
+
+  We've found a bug for you!
+  /Users/jfh/Desktop/game-tournament/game-tournament/src/AC4.re 1:6-18
+  
+  1 │ open! CS17SetupGame;   
+  2 │ open SigGame; 
+  3 │ 
+  
+  The module or file CS17SetupGame can't be found.
+  - If it's a third-party dependency:
+    - Did you list it in bsconfig.json?
+    - Did you run `bsb` instead of `bsb -make-world`
+      (latter builds third-parties)?
+  - Did you include the file's directory in bsconfig.json?
+  
+Hotreload failed
+bsb running with pid: 95029
+Reloading hotloaded module
+Successfully changed functions
+>>>> Start compiling
+[1/6] [34mBuilding[39m [2msrc/AC4.cmo[22m
+
+  We've found a bug for you!
+  /Users/jfh/Desktop/game-tournament/game-tournament/src/AC4.re 1:6-18
+  
+  1 │ open! CS17SetupGame;   
+  2 │ open SigGame; 
+  3 │ 
+  
+  The module or file CS17SetupGame can't be found.
+  - If it's a third-party dependency:
+    - Did you list it in bsconfig.json?
+    - Did you run `bsb` instead of `bsb -make-world`
+      (latter builds third-parties)?
+  - Did you include the file's directory in bsconfig.json?
+  
+[2/6] [34mBuilding[39m [2msrc/APlayer.cmo[22m
+
+  We've found a bug for you!
+  /Users/jfh/Desktop/game-tournament/game-tournament/src/APlayer.re 1:6-18
+  
+  1 │ open! CS17SetupGame;
+  2 │ open SigGame; 
+  3 │ open Connect4;
+  
+  The module or file CS17SetupGame can't be found.
+  - If it's a third-party dependency:
+    - Did you list it in bsconfig.json?
+    - Did you run `bsb` instead of `bsb -make-world`
+      (latter builds third-parties)?
+  - Did you include the file's directory in bsconfig.json?
+  
+[3/6] [34mBuilding[39m [2msrc/BPlayer.cmo[22m
+
+  We've found a bug for you!
+  /Users/jfh/Desktop/game-tournament/game-tournament/src/BPlayer.re 1:7-19
+  
+  1 │ open CS17SetupGame;
+  2 │ open SigGame; 
+  3 │ open Connect4;
+  
+  The module or file CS17SetupGame can't be found.
+  - If it's a third-party dependency:
+    - Did you list it in bsconfig.json?
+    - Did you run `bsb` instead of `bsb -make-world`
+      (latter builds third-parties)?
+  - Did you include the file's directory in bsconfig.json?
+  
+[4/6] [34mBuilding[39m [2msrc/BC4.cmo[22m
+
+  We've found a bug for you!
+  /Users/jfh/Desktop/game-tournament/game-tournament/src/BC4.re 1:7-19
+  
+  1 │ open CS17SetupGame;   
+  2 │ open SigGame; 
+  3 │ 
+  
+  The module or file CS17SetupGame can't be found.
+  - If it's a third-party dependency:
+    - Did you list it in bsconfig.json?
+    - Did you run `bsb` instead of `bsb -make-world`
+      (latter builds third-parties)?
+  - Did you include the file's directory in bsconfig.json?
+  
+>>>> Finish compiling(exit: 1)
+Reloading hotloaded module
+Successfully changed functions
+Player 1 Wins!
+
+> reprocessing-example@ build:native /Users/jfh/Desktop/game-tournament/game-tournament
+> bsb -make-world -backend native
+
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+ninja: no work to do.
+
+Usage: npm <command>
+
+where <command> is one of:
+    access, adduser, audit, bin, bugs, c, cache, ci, cit,
+    clean-install, clean-install-test, completion, config,
+    create, ddp, dedupe, deprecate, dist-tag, docs, doctor,
+    edit, explore, fund, get, help, help-search, hook, i, init,
+    install, install-ci-test, install-test, it, link, list, ln,
+    login, logout, ls, org, outdated, owner, pack, ping, prefix,
+    profile, prune, publish, rb, rebuild, repo, restart, root,
+    run, run-script, s, se, search, set, shrinkwrap, star,
+    stars, start, stop, t, team, test, token, tst, un,
+    uninstall, unpublish, unstar, up, update, v, version, view,
+    whoami
+
+npm <command> -h  quick help on <command>
+npm -l            display full usage info
+npm help <term>   search for help on <term>
+npm help npm      involved overview
+
+Specify configs in the ini-formatted file:
+    /Users/jfh/.npmrc
+or on the command line via: npm <command> --key value
+Config info can be viewed via: npm help config
+
+npm@6.13.1 /Users/jfh/.nvm/versions/node/v12.9.0/lib/node_modules/npm
+
+fake1 advances! --Bye in this round--

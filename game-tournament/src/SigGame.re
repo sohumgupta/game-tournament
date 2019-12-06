@@ -3,8 +3,6 @@ module type Game = {
     /* specifies a player */
     type whichPlayer = P1 | P2;
 
-    let names : string;
-
     /* status of game: if it's over (and who won) or ongoing (and who's turn) */
     type status =
        | Win(whichPlayer)
@@ -42,5 +40,5 @@ module type Game = {
     let moveOfString: string => move;
 
     /* estimates the value of a given state (static evaluation) */
-    let evalLeaf: state => float;
+    let estimateValue: state => float;
 };
